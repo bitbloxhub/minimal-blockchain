@@ -30,7 +30,12 @@ class blockchain:
         else:
             # load from file
             chainfromfile=json.load(open(loadfile,"r"))
-            self.chain=copy.deepcopy(chainfromfile)
+            realchain=[]
+            for cblock in chainfromfile:
+                b=block(None,None) #placeholders that allow us to create the block object
+                b.block=copy.deepcopy(cblock)
+                realchain.append(b)
+            self.chain=copy.deepcopy(realchain)
 
     def newblock(self,stored):
         self.chain.append(block(self.lastblock.hash(),stored))
@@ -57,6 +62,6 @@ class blockchain:
 
     def save(self,savefile):
         savedat=[]
-        for block in self.chain:
-            savedat.append(block.block)
+        for cblock in self.chain:
+            savedat.append(cblock.block)
         json.dump(savedat,open(savefile,"w"))
