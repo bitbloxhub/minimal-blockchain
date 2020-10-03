@@ -29,7 +29,7 @@ class blockchain:
             self.chain.append(block("genisisblock",genisisdata))
         else:
             # load from file
-            chainfromfile=json.load(open(loadfile))
+            chainfromfile=json.load(open(loadfile,"r"))
             self.chain=copy.deepcopy(chainfromfile)
 
     def newblock(self,stored):
@@ -54,3 +54,9 @@ class blockchain:
 
     def getblock(self,blockidx):
         return self.chain[blockidx].block
+
+    def save(self,savefile):
+        savedat=[]
+        for block in self.chain:
+            savedat.append(block.block)
+        json.dump(savedat,open(savefile,"w"))
