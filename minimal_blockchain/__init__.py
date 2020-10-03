@@ -1,6 +1,7 @@
 import json
 import hashlib
 import time
+import copy
 
 
 class block:
@@ -21,9 +22,15 @@ class block:
         return hex_hash
 
 class blockchain:
-    def __init__(self,genisisdata):
+    def __init__(self,genisisdata=None,loadfile=None):
         self.chain=[]
-        self.chain.append(block("genisisblock",genisisdata))
+        if not loadfile:
+            # new chain
+            self.chain.append(block("genisisblock",genisisdata))
+        else:
+            # load from file
+            chainfromfile=json.load(open(loadfile))
+            self.chain=copy.deepcopy(chainfromfile)
 
     def newblock(self,stored):
         self.chain.append(block(self.lastblock.hash(),stored))
