@@ -38,7 +38,7 @@ class blockchain:
             self.chain=copy.deepcopy(realchain)
 
     def newblock(self,stored):
-        self.chain.append(block(self.lastblock.hash(),stored))
+        self.chain.append(block(self.lastblock().hash(),stored))
 
     def lastblock(self):
         return self.chain[-1]
